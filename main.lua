@@ -85,9 +85,12 @@ function runitCommand(bp) -- bp BufPane
 		return -- early exit
 	end
 
-
 	local cmd = string.format("./%s", filename) -- does not support spaces in filename
-	if filetype == "go" then
+
+	-- Run R scripts with Rscript
+	if string.match(filename, "%.R$") then
+		cmd = string.format("Rscript '%s'", filename)
+	elseif filetype == "go" then
 		if string.match(filename, "_test.go$") then
 			cmd = "go test"
 		else
